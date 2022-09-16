@@ -40,20 +40,32 @@ function Post({ post }: Props) {
             Published at {new Date(post._createdAt).toLocaleString()}
           </p>
         </div>
-        <div>
+        <div className="mt-10">
           <PortableText
             className=""
             dataset={process.env.NEXT_PUBLIC_SANITY_DATASET!}
             projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
             content={post.body}
-            serializers={
-              {
-                // TODO: compete serializers 1hr 43-44 min
-              }
-            }
+            serializers={{
+              h1: (props: any) => (
+                <h1 className="text-2xl font-bold my-5" {...props} />
+              ),
+              h2: (props: any) => (
+                <h1 className="text-xl font-bold my-5" {...props} />
+              ),
+              li: ({ children }: any) => (
+                <li className="ml-4 list-disc">{children}</li>
+              ),
+              link: ({ href, children }: any) => (
+                <a href={href} className="text-blue-500 hover:underline">
+                  {children}
+                </a>
+              ),
+            }}
           />
         </div>
       </article>
+      <hr className="max-w-lg my-5 mx-auto border border-yellow-500" />
     </main>
   );
 }
